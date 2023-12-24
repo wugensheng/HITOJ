@@ -1,18 +1,21 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App" />
+    <!--    <MdEditor :value="value" :handleChange="onChange"></MdEditor>-->
+    <CodeEditor :value="value" :handleChange="onChange"></CodeEditor>
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
-import HelloWorld from "@/components/HelloWorld.vue"; // @ is an alias to /src
+<script setup lang="ts">
+import { defineComponent, ref } from "vue";
+import MdEditor from "@/components/MdEditor.vue";
+import CodeEditor from "@/components/CodeEditor.vue";
 
-export default defineComponent({
-  name: "HomeView",
-  components: {
-    HelloWorld,
-  },
-});
+/**
+ * 父组件传递给子组件的值和方法，在父组件中可以拿到该值
+ */
+const value = ref("");
+const onChange = (v: string) => {
+  value.value = v;
+  console.log(v);
+};
 </script>
