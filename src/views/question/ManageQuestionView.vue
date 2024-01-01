@@ -7,9 +7,10 @@
       :pagination="{
         showTotal: true,
         pageSize: searchParams.pageSize,
-        current: searchParams.pageNum,
+        current: searchParams.current,
         total,
       }"
+      @page-change="onPageChange"
     >
       <template #optional="{ record }">
         <a-space>
@@ -22,7 +23,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { onMounted, ref, watchEffect } from "vue";
 import {
   Page_Question_,
   Question,
@@ -39,8 +40,15 @@ const dataList = ref([]);
 const total = ref(0);
 const searchParams = ref({
   pageSize: 10,
-  pageNum: 1,
+  current: 1,
 });
+
+const onPageChange = (number: number) => {
+  searchParams.value = {
+    ...searchParams.value,
+    current: number,
+  };
+};
 
 const loadData = async () => {
   const res = await QuestionControllerService.listQuestionByPageUsingPost(
@@ -53,6 +61,11 @@ const loadData = async () => {
     message.error("加载失败，" + res.message);
   }
 };
+
+// 监听加载函数中数据的变化，重新执行
+watchEffect(() => {
+  loadData();
+});
 
 /**
  * 页面加载时，请求数据

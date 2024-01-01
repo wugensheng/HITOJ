@@ -1,16 +1,21 @@
 <template>
-  <div id="code-editor" ref="codeEditorRef" style="height: 400px"></div>
+  <div
+    id="code-editor"
+    ref="codeEditorRef"
+    style="min-height: 400px; height: 70vh"
+  ></div>
 </template>
 
 <script setup lang="ts">
 import * as monaco from "monaco-editor";
-import { defineProps, onMounted, ref, toRaw, withDefaults } from "vue";
+import { defineProps, onMounted, ref, toRaw, withDefaults, watch } from "vue";
 
 /**
  * 定义组件属性类型
  */
 interface Props {
   value: string;
+  language: string;
   handleChange: (value: string) => void;
 }
 
@@ -19,6 +24,7 @@ interface Props {
  */
 const props = withDefaults(defineProps<Props>(), {
   value: () => "",
+  language: () => "java",
   handleChange: (value: string) => {
     console.log(value);
   },
@@ -26,17 +32,31 @@ const props = withDefaults(defineProps<Props>(), {
 
 const codeEditorRef = ref();
 const codeEditor = ref();
+
+watch(
+  () => props.language,
+  () => {
+    if (codeEditor.value) {
+      monaco.editor.setModelLanguage(
+        toRaw(codeEditor.value).getModel(),
+        props.language
+      );
+    }
+  }
+);
 onMounted(() => {
   if (!codeEditorRef.value) {
     return;
   }
+  console.log(props.language);
   codeEditor.value = monaco.editor.create(codeEditorRef.value, {
     value: props.value,
-    language: "java",
+    language: props.language,
     automaticLayout: true,
-    lineNumbers: "off",
-    roundedSelection: false,
-    scrollBeyondLastLine: false,
+    colorDecorators: true,
+    minimap: {
+      enabled: false,
+    },
     readOnly: false,
     theme: "vs-dark",
   });

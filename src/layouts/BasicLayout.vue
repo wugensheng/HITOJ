@@ -7,7 +7,7 @@
       <a-layout-content class="content">
         <router-view />
       </a-layout-content>
-      <a-layout-footer class="footer">编程导航</a-layout-footer>
+      <a-layout-footer class="footer">哈尔滨工业大学在线OJ</a-layout-footer>
     </a-layout>
   </div>
 </template>
@@ -25,7 +25,6 @@
 }
 
 #basicLayout .content {
-  background: linear-gradient(to right, #bbb, #fff);
   margin-bottom: 16px;
   padding: 20px;
 }

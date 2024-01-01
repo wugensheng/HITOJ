@@ -26,11 +26,4 @@ const route = useRoute();
 /**
  * 全局初始化函数，全局单词调用的函数可以写到这里
  */
-const doInit = () => {
-  console.log("欢迎来到这里");
-};
-
-onMounted(() => {
-  doInit();
-});
 </script>
