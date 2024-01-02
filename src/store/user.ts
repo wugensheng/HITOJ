@@ -12,13 +12,13 @@ export default {
   getters: {},
   mutations: {
     updateUser(state, payload) {
+      console.log("payload: ", payload);
       state.loginUser = payload;
     },
   },
   actions: {
     async getLoginUser({ commit, state }, payload) {
       const res = await UserControllerService.getLoginUserUsingGet();
-      console.log(res);
       if (res.code === 0) {
         commit("updateUser", res.data);
       } else {

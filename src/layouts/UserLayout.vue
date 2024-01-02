@@ -10,7 +10,7 @@
       <a-layout-content class="content">
         <router-view></router-view>
       </a-layout-content>
-      <a-layout-footer class="footer">@版权所有，违者必究</a-layout-footer>
+      <!--      <a-layout-footer class="footer">@版权所有，违者必究</a-layout-footer>-->
     </a-layout>
   </div>
 </template>

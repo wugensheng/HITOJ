@@ -7,13 +7,24 @@ import checkAccess from "@/access/checkAccess";
 
 router.beforeEach(async (to, from, next) => {
   let loginUser = store.state?.user?.loginUser;
+  console.log("loginUser: ", loginUser);
   // 自动登录
   if (!loginUser || !loginUser.userRole) {
     await store.dispatch("user/getLoginUser");
     loginUser = store.state.user.loginUser;
+    console.log("loginUser: ", loginUser);
+    if (
+      !loginUser ||
+      !loginUser.userRole ||
+      loginUser.userRole === ACCESSENUM.NOT_LOGIN
+    ) {
+      next(`/user/login?redirect=${to.fullPath}`);
+      return;
+    }
   }
 
   const needAccess = (to?.meta?.access as string) ?? ACCESSENUM.NOT_LOGIN;
+  // console.log("needAccess: ", needAccess);
   // 权限校验
   if (needAccess !== ACCESSENUM.NOT_LOGIN) {
     if (

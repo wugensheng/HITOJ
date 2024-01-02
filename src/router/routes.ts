@@ -17,10 +17,15 @@ export const routes: Array<RouteRecordRaw> = [
     path: "/",
     name: "主页",
     component: QuestionsView,
+    redirect: "/question",
+    children: [],
+    meta: {
+      hideInMenu: true,
+    },
   },
   {
     path: "/question",
-    name: "浏览题目",
+    name: "题库",
     component: QuestionsView,
   },
   {
@@ -41,7 +46,7 @@ export const routes: Array<RouteRecordRaw> = [
   },
   {
     path: "/question_submit",
-    name: "浏览题目提交",
+    name: "提交记录",
     component: QuestionSubmitView,
   },
   {
@@ -82,19 +87,12 @@ export const routes: Array<RouteRecordRaw> = [
       },
     ],
   },
-  // {
-  //   path: "/hide",
-  //   name: "隐藏页面",
-  //   component: HomeView,
-  //   meta: {
-  //     hideInMenu: true,
-  //   },
-  // },
   {
     path: "/admin",
     name: "管理员",
     component: AdminView,
     meta: {
+      hideInMenu: true,
       access: ACCESSENUM.ADMIN,
     },
   },

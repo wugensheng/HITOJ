@@ -7,6 +7,17 @@
       <a-form-item field="tags" label="标签">
         <a-input-tag v-model="form.tags" placeholder="请选择标签" allow-clear />
       </a-form-item>
+      <a-form-item field="level" label="难度">
+        <a-select
+          v-model="form.level"
+          :style="{ width: '320px' }"
+          placeholder="选择题目难度"
+        >
+          <a-option>简单</a-option>
+          <a-option>中等</a-option>
+          <a-option>困难</a-option>
+        </a-select>
+      </a-form-item>
       <a-form-item field="content" label="题目内容">
         <MdEditor :value="form.content" :handle-change="onContentChange" />
       </a-form-item>
@@ -110,6 +121,7 @@ const updatePage = route.path.includes("update");
 let form = ref({
   title: "",
   tags: [],
+  level: "",
   answer: "",
   content: "",
   judgeConfig: {
@@ -173,7 +185,7 @@ onMounted(() => {
 });
 
 const doSubmit = async () => {
-  console.log(form.value);
+  let tags = form.value.tags;
   // 区分更新还是创建
   if (updatePage) {
     const res = await QuestionControllerService.updateQuestionUsingPost(
